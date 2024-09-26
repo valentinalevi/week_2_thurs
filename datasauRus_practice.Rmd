@@ -1,0 +1,83 @@
+---
+title: "datasauRus"
+author: "Kasia Banas"
+date: "2024-09-26"
+output: html_document
+---
+
+Install and load the datasauRus library:
+
+```{r}
+install.packages("datasauRus")
+library(datasauRus)
+```
+
+Load the tidyverse: 
+```{r}
+library(tidyverse)
+```
+
+`datasaurus_dozen` is a dataset demonstrating the utility of visualization. 
+These 12 datasets are equal in standard measures: mean, standard deviation, 
+and Pearson's correlation. But they look very different
+Run the chunk below to get more info about this dataset:
+
+```{r}
+?datasaurus_dozen
+```
+
+See what datasets are in the datasaurus_dozen:
+
+```{r}
+datasaurus_dozen %>% 
+  distinct(dataset)
+```
+
+## Exercise 1
+Pick 2 datasets and plot them next to one another
+(I'd recommend scatterplot, use facets if you like)
+
+```{r}
+library(ggplot2)
+
+dino_data <- datasaurus_dozen %>% 
+  filter(dataset=="dino")
+
+dino_data %>% 
+  ggplot(aes(x=x, y=y))+
+  geom_point(colour = "darkgreen")
+
+bullseye_data <- datasaurus_dozen %>% 
+  filter(dataset=="bullseye")
+
+bullseye_data %>% 
+  ggplot(aes(x=x, y=y))+
+  geom_point(colour = "red") + 
+
+combined_data <- datasaurus_dozen %>% 
+  filter(dataset=="dino" | dataset=="bullseye")
+
+combined_data %>% 
+  ggplot(aes(x=x, y=y))+
+  geom_point(colour = "blue")+
+  facet_wrap(~dataset)
+
+```
+
+
+## Exercise 2
+For these same two datasets, find the mean and standard deviation
+for the x and y variable in each. What did you find? 
+```{r}
+summary(dino_data) # mean of x = 54.26 , mean of y = 47.832  
+summary(bullseye_data) # mean of x = 54.27 , mean of y = 47.831 
+
+sd(dino_data$x) #sd of x = 16.76514
+sd(dino_data$y) #sd of y = 26.9354
+sd(bullseye_data$x) #sd of x = 16.76924
+sd(bullseye_data$y) #sd of y = 26.93573
+```
+
+
+
+
