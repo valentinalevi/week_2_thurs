@@ -22,7 +22,10 @@ Assume the following definitions for a survey:
 Generate a vector with 100 random samples that specifies the age of 100 people (in years), but contains exactly 20 minors, 50 adults, and 30 seniors.
 
 ```{r}
-
+minors <- sample(1:17, 20, replace = TRUE)
+adults <- sample(18:64, 50, replace = TRUE)
+seniors <- sample(65:99, 30, replace = TRUE)
+ages <- c(minors, adults, seniors)
 ```
 
 Now use some functions on your age vector to answer the following questions:
@@ -30,25 +33,31 @@ Now use some functions on your age vector to answer the following questions:
 1.  What is the average (mean), minimum, and maximum age in this sample?
 
 ```{r}
-
+summary(ages)
 ```
 
 2.  How many people are younger than 25 years?
 
 ```{r}
-
+population <- data.frame(ages)
+under_25 <- population %>%
+  filter(ages < 25)
 ```
 
 3.  What is the average (mean) age of people older than 50 years?
 
 ```{r}
-
+over_50 <- population %>% 
+  filter(ages > 50)
+mean(over_50$ages)
 ```
 
 4.  How many people have a round age (i.e., an age that is divisible by 10)? What is their mean age?
 
 ```{r}
-
+round_age <- population %>% 
+  filter(ages %% 10 == 0) # what remains after diving by 10
+mean(round_age$ages)
 ```
 
 ## Exercise 1: Strange histograms
@@ -68,8 +77,10 @@ ggplot(mpg, aes(x = cty)) +    # set mappings for ALL geoms
 ```
 
 1.  Why is the (blue) line of the polygon lower than the (yellow) bars of the histogram?
+Because it shows a range
 
 2.  Change 1 argument in the code so that both (lines and bars) have the same heights.
+change size to binwidth
 
 3.  The code above repeats the aesthetic mapping aes(x = cty) in 2 locations. Which of these can be deleted without changing the resulting graph? Why?
 

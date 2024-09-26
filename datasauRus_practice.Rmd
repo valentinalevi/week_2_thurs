@@ -29,7 +29,7 @@ Run the chunk below to get more info about this dataset:
 See what datasets are in the datasaurus_dozen:
 
 ```{r}
-datasaurus_dozen %>% 
+datasaurus_dozen %>% # called the pipe - way to link up lines of code 
   distinct(dataset)
 ```
 
@@ -64,6 +64,16 @@ combined_data %>%
 
 ```
 
+faster way:
+```{r}
+datasaurus_dozen %>%
+  filter(dataset == "dino" | dataset=="star") %>%  #use OR 
+  ggplot(aes(x = x, y = y, colour = dataset)) + 
+  geom_point() +
+ facet_wrap(~dataset)
+  
+```
+
 
 ## Exercise 2
 For these same two datasets, find the mean and standard deviation
@@ -78,6 +88,14 @@ sd(bullseye_data$x) #sd of x = 16.76924
 sd(bullseye_data$y) #sd of y = 26.93573
 ```
 
+faster way:
+```{r}
+datasaurus_dozen %>%
+  filter(dataset == "dino" | dataset=="star") %>%
+  group_by(dataset) %>%
+  summarise(mean_x = mean(x), sd_x = (sd(x)), mean_y = mean(y), sd_y = sd(y))
+
+```
 
 
 
